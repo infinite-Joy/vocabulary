@@ -110,19 +110,16 @@ class Vocabulary(object):
         """
         initial_parsed_content = {}
 
-        i = 0
-        for content_dict in tuc_content:
+        for i, content_dict in enumerate(tuc_content):
             if content_to_be_parsed in content_dict.keys():
                 contents_raw = content_dict[content_to_be_parsed]
                 if content_to_be_parsed == "phrase":
                     ## for 'phrase', 'contents_raw' is a dictionary
                     initial_parsed_content[i] = contents_raw['text']
-                    i += 1
                 elif content_to_be_parsed == "meanings":
                     ## for 'meanings', 'contents_raw' is a list
                     for meaning_content in contents_raw:
                         initial_parsed_content[i] = meaning_content['text']
-                        i +=1
 
         final_parsed_content = {}
         ## removing duplicates(if any) from the dictionary
@@ -178,7 +175,6 @@ class Vocabulary(object):
                 return False
             '''get meanings'''
             meanings_list = Vocabulary.__parse_content(tuc_content, "meanings")
-            # return meanings_list
             return json.dumps(meanings_list)
         else:
             return False
@@ -241,7 +237,6 @@ class Vocabulary(object):
                     return False
                 translations_list = Vocabulary.__parse_content(tuc_content, "phrase")
                 if translations_list:
-                    # return synonyms_list
                     return json.dumps(translations_list)
                 else:
                     return False
@@ -295,7 +290,6 @@ class Vocabulary(object):
                     final_dictionary[key] = value
                     antonyms.append(final_dictionary)
 
-            # return json.dumps(final_dictionary)
             return final_dictionary
         else:
             return False
@@ -327,7 +321,6 @@ class Vocabulary(object):
                         final_list.append({ "seq": i, "text": key, "example:" :value})
                         i += 1
                     return json.dumps(final_list)
-                    # return final_list
                 else:
                     return False
         else:
@@ -352,7 +345,6 @@ class Vocabulary(object):
             if word_examples:
                 ## reforamatting "word_examples" using "__clean_dict()"
                 return json.dumps(Vocabulary.__clean_dict(word_examples))
-                # return Vocabulary.__clean_dict(word_examples)
             else:
                 return False
         else:
@@ -373,7 +365,7 @@ class Vocabulary(object):
             '''
             Refer : http://stackoverflow.com/questions/18337407/saving-utf-8-texts-in-json-dumps-as-utf8-not-as-u-escape-sequence
             '''
-            ## TODO: Fix the unicode issue mentioned in 
+            ## TODO: Fix the unicode issue mentioned in
             ## https://github.com/prodicus/vocabulary#181known-issues
             if sys.version_info[:2] <= (2, 7):  ## python2
                 return json_obj
@@ -396,6 +388,5 @@ class Vocabulary(object):
         json_obj = Vocabulary.__return_json(url)
         if json_obj:
             return json.dumps(json_obj)
-            # return json_obj
         else:
             return False

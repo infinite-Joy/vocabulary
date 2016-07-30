@@ -19,14 +19,14 @@ class TestModule(unittest.TestCase):
         result = '[{"seq": 0, "text": "Present participle of hum."}]'
         middle_val = json.loads(result)
         expected_result = json.dumps(middle_val)
-        if sys.version_info[:2] <= (2, 7):  ## python 2 
+        if sys.version_info[:2] <= (2, 7):  ## python 2
             self.assertItemsEqual(current_result, expected_result)
         else:       # python 3
             """
-            assertItemsEqual() was renamed to assertCountEqual() 
-            Why I am not using assertEqual() here? 
+            assertItemsEqual() was renamed to assertCountEqual()
+            Why I am not using assertEqual() here?
 
-            Reference: 
+            Reference:
             - http://stackoverflow.com/a/7473137/3834059
             - https://docs.python.org/2/library/unittest.html#unittest.TestCase.assertItemsEqual
             - https://docs.python.org/3/library/unittest.html?highlight=assertcountequal#unittest.TestCase.assertCountEqual
@@ -37,7 +37,7 @@ class TestModule(unittest.TestCase):
     def test_meaning_not_valid_phrase(self):
         current_result = vb.meaning("sxsw")
         self.assertFalse(current_result)
-        
+
     def test_synonym_valid_phrase(self):
         current_result = vb.synonym("repudiate")
         result = '[{"seq": 0, "text": "deny"}]'
@@ -51,7 +51,7 @@ class TestModule(unittest.TestCase):
     def test_synonym_not_valid_phrase(self):
         current_result = vb.synonym("sxsw")
         self.assertFalse(current_result)
-        
+
     def test_antonym_valid_phrase_1(self):
         current_result = vb.antonym("love")
         result = '{"text": ["hate"]}'
