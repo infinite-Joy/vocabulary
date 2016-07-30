@@ -349,9 +349,8 @@ class Vocabulary(object):
                 if example["thumbs_up"] > example["thumbs_down"]:
                     word_examples[i] = example["example"].replace("\r", "").replace("\n", "")
             if word_examples:
-                ## reforamatting "word_examples" using "__clean_dict()"
+                ## reformatting "word_examples" using "__clean_dict()"
                 return json.dumps(Vocabulary.__clean_dict(word_examples))
-                # return Vocabulary.__clean_dict(word_examples)
             else:
                 return False
         else:
@@ -372,7 +371,6 @@ class Vocabulary(object):
             '''
             Refer : http://stackoverflow.com/questions/18337407/saving-utf-8-texts-in-json-dumps-as-utf8-not-as-u-escape-sequence
             '''
-            # return json.dumps(json_obj, ensure_ascii=False)
             return json_obj
         else:
             return False
@@ -391,6 +389,5 @@ class Vocabulary(object):
         json_obj = Vocabulary.__return_json(url)
         if json_obj:
             return json.dumps(json_obj)
-            # return json_obj
         else:
             return False
