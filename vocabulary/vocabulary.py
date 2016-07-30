@@ -110,16 +110,19 @@ class Vocabulary(object):
         """
         initial_parsed_content = {}
 
-        for i, content_dict in enumerate(tuc_content):
+        i = 0
+        for content_dict in tuc_content:
             if content_to_be_parsed in content_dict.keys():
                 contents_raw = content_dict[content_to_be_parsed]
                 if content_to_be_parsed == "phrase":
                     ## for 'phrase', 'contents_raw' is a dictionary
                     initial_parsed_content[i] = contents_raw['text']
+                    i += 1
                 elif content_to_be_parsed == "meanings":
                     ## for 'meanings', 'contents_raw' is a list
                     for meaning_content in contents_raw:
                         initial_parsed_content[i] = meaning_content['text']
+                        i += 1
 
         final_parsed_content = {}
         ## removing duplicates(if any) from the dictionary
@@ -200,13 +203,8 @@ class Vocabulary(object):
                 return False
             synonyms_list = Vocabulary.__parse_content(tuc_content, "phrase")
             if synonyms_list:
-                # return synonyms_list
                 return json.dumps(synonyms_list)
-            else:
-                return False
-
-        else:
-            return False
+        return False
 
         ## TO-DO:
         ## if this gives me no results, will query "bighugelabs"
@@ -238,10 +236,7 @@ class Vocabulary(object):
                 translations_list = Vocabulary.__parse_content(tuc_content, "phrase")
                 if translations_list:
                     return json.dumps(translations_list)
-                else:
-                    return False
-            else:
-                return False
+            return False
 
 
 
